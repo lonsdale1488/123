@@ -4,19 +4,33 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.Buffer;
 import java.security.cert.X509Certificate;
 
 public class Main {
 
     public static void main(String[] args) {
-        // write your code here
-    }
 
+        disableSSL();
+try {String response = getexchang();
+ //   System.out.print(response);
+    String fin = " ";
+    if (response == null)
+    {return;}
+
+
+
+        writeFile(response);
+readFile();
+
+} catch (Exception e) {
+    e.printStackTrace();
+}
+
+    }
     private static String getexchang() throws Exception {
         String url = "https://exchangeratesapi.io/api/latest";
         URL obj = new URL(url);
@@ -57,4 +71,81 @@ public class Main {
             e.printStackTrace();
         }
     }
+    private static String readFile()  {
+        try {
+            FileReader reader = new FileReader("Text.txt");
+            int c;
+            while ((c = reader.read()) != -1) {
+               // System.out.print((char) c);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+   private static void writeFile(String  texttowrite)
+    {
+        try(FileWriter writer = new FileWriter("Text.txt")) {
+
+
+            int a =0;
+    char[] look = texttowrite.toCharArray();
+    for (int j = 0; j < look.length; j++) {
+
+
+        if (look[j] == '{') {
+            a=a+1;
+
+            if (a>0)
+            {
+                writer.write("\n");
+                for (int g = 0; g < a; g++)
+                {
+                    writer.write("\t");
+                }
+            }
+
+            writer.write(look[j]);
+            writer.write("\n");
+            for (int g = 0; g < a; g++)
+            {
+                writer.write("\t");
+            }
+
+
+        }
+       else if (look[j] == ',') {
+            writer.write(look[j]);
+            writer.write("\n");
+            for (int g = 0; g < a; g++)
+            {
+                writer.write("\t");
+            }
+        }
+        else  if (look[j] == '}')
+        {
+            writer.write("\n");
+            for (int g = 0; g < a; g++)
+            {
+                writer.write("\t");
+            }
+            writer.write(look[j]);
+            a=a-1;
+        }
+       else { writer.write(look[j]);}
+    }
+
+
+
+//           writer.write(texttowrite[i]+"\n");
+//            writer.write("\n");}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }
