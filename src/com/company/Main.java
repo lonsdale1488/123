@@ -96,23 +96,21 @@ readFile();
 
 
         if (look[j] == '{') {
-            a=a+1;
-
             if (a>0)
+        {writer.write("\n");
+            for (int g = 0; g < a; g++)
             {
-                writer.write("\n");
-                for (int g = 0; g < a; g++)
-                {
-                    writer.write("\t");
-                }
+                writer.write("\t");
             }
-
+        }
+            a=a+1;
             writer.write(look[j]);
             writer.write("\n");
             for (int g = 0; g < a; g++)
             {
                 writer.write("\t");
             }
+
 
 
         }
@@ -127,20 +125,20 @@ readFile();
         else  if (look[j] == '}')
         {
             writer.write("\n");
+            a=a-1;
             for (int g = 0; g < a; g++)
             {
                 writer.write("\t");
             }
             writer.write(look[j]);
-            a=a-1;
+
         }
        else { writer.write(look[j]);}
     }
 
 
 
-//           writer.write(texttowrite[i]+"\n");
-//            writer.write("\n");}
+
         } catch (IOException e) {
             e.printStackTrace();
         }
